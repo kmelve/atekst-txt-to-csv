@@ -1,4 +1,4 @@
-# ATEKST Parser
+# ATEKST txt to csv
 
 The goal of this python script is to take a clean text export file from [Atekst Retriever](http://web.retriever-info.com/services/archive.html) and convert it into a database friendly format (.csv) for research purposes (qualitative and quantitative coding and analysis).
 
