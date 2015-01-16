@@ -60,7 +60,8 @@ Nobels litteraturpris til egypteren Naguib Mahfouz: Naturbegavet satiriker
 Aftenposten Morgen, 14.10.1988
 GLEICHMANN GABI
 Side 7
-Pu blisert på trykk. 
+Publisert på trykk. 
+
 
 GABI GLEICHMANN Når årets Nobelpris i litteratur er tildelt egypteren Naguib Mahfouz, 
 er det gledelig i dobbelt forstand; dels har Svenska Akademien valgt et spennende 
@@ -74,20 +75,21 @@ for
 inputfile = 'testcorpus.txt'
 str_equalspattern = "="*78
 str_dashpattern = "-"*78
-regex_index = re.compile('\>.*')
-regex_singlearticle = re.compile(ur'(?:\-{78}).+?(?<=\n{3})', re.DOTALL)
+regex_index = re.compile('\>.*') #finds the index
+regex_singlearticle_meta = re.compile(ur'(?:\-{78}).+?(?<=\n{3})', re.DOTALL) #finds the article meta header
+regex_singlearticle_body = re.compile(ur'(?:\-{78}.+?\n{3})(.+?)(?:\={78})', re.DOTALL) #finds the article body text
 
 atekst_index = []
 atekst_meta = []
 articles = []
+article_meta = []
 first_headline = ''
 first_article = ''
 
-
 with open(inputfile, 'r') as f:
-    file_string = f.read()
+    file_string = f.read() #wow, so much file read (lines is for loosers)
 
-for i, string in enumerate(file_string.split(str_equalspattern)): #in this for-loop we deal with the meta info, the index and the first article
+for i, string in enumerate(test_string.split(str_equalspattern)): #in this for-loop we deal with the meta info, the index and the first article
     if i == 0: # this is the index and the first article
         index_list = regex_index.findall(string) # finds all index items (beginning with >)
         for line in index_list: # loop through all the lines in the index
@@ -111,14 +113,21 @@ articles.insert(0, first_article) #insert the first article into the articles di
 articles.insert(0, str_dashpattern) # insert first headline into the articles dictionary
 articles.insert(0, first_headline) # insert first headline into the articles dictionary
 
-article = regex_singlearticle.findall(''.join(articles))
+
+article = regex_singlearticle_meta.findall(''.join(articles)) #find the meta header in the article
+# article_body = regex_singlearticle_body.findall(''.join(articles)) #find the body text
+# print article_body
 
 for art in article:
-    print art.replace(str_dashpattern, '').replace('\n\n','')
+    art = art.replace(str_dashpattern, '').replace('\n\n','')
+    article_meta.append(art)
 
-# print '-'*100 + 'Meta' + '-'*100
-# print atekst_meta
-# print '-'*100 + 'Index' + '-'*100
-# print '\n'.join(atekst_index)
-# print '-'*100 + 'Articles' + '-'*100
-# print '\n'.join(articles)
+print '-'*100 + 'Meta' + '-'*100
+print atekst_meta
+print '-'*100 + 'Index' + '-'*100
+print '\n'.join(atekst_index)
+print '-'*100 + 'Article meta' + '-'*100
+print str_dashpattern.join(article_meta)
+print '-'*100 + 'Articles body' + '-'*100
+#print '\n'.join(article_body)
+print '\n'.join(articles)
