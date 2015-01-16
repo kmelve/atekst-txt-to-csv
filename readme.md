@@ -6,4 +6,4 @@ This is my first real project in python, so forgive my n00bness. Comments, pull 
 
 ## Progress
 
-	- 16/01/15: The script is (obviously) not completely done yet. I have so far managed to identify and break down the different sections of export file
+-	16/01/15: The script is (obviously) not completely done yet. I have so far managed to identify and break down the different sections of export file
